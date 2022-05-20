@@ -1,7 +1,9 @@
 // this is in the module, but was not originally in this file, is it not needed?
-import React from 'react'; 
+import React, { useState } from 'react'; 
 import Nav from './components/Nav';
 import About from './components/About';
+import Gallery from './components/Gallery';
+
 // You need to import React in every component file with `import Reach from 'react';`
 // You can also import any images or CSS you want to use at the top.
 
@@ -9,10 +11,29 @@ import About from './components/About';
 // Think of functions that return JSX as functions that use document.createElement(JSX). In fact, the way React uses JSX behind the scenes is very similar to document.createElement()
 // using webpack and React here
 function App() {
+
+    // send this state to the Nav component as props
+    const [categories] = useState([
+        {
+          name: 'commercial',
+          description: 'Photos of grocery stores, food trucks, and other commercial projects',
+        },
+        { name: 'portraits', description: 'Portraits of people in my life' },
+        { name: 'food', description: 'Delicious delicacies' },
+        { name: 'landscape', description: 'Fields, farmhouses, waterfalls, and the beauty of nature' },
+    ]);
+
+    const [currentCategory, setCurrentCategory] = useState(categories[0]);
+
     return (
         <div>
-            <Nav />
+            <Nav
+                categories={categories}
+                setCurrentCategory={setCurrentCategory}
+                currentCategory={currentCategory}
+            ></Nav>
             <main>
+                <Gallery />  
                 <About />  
                 {/* this is a component */}
                 {/* same as <About></About> */}
