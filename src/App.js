@@ -13,6 +13,9 @@ import Gallery from './components/Gallery';
 function App() {
 
     // send this state to the Nav component as props
+    // start by initializing the category state as an array of a few objects
+    // This could be just a regular array, rather than an array inside useState, but we chose to use the useState hook here so that we can have the option to change the categories at some point in the future
+    // It is completely fine to use useState without a setter, but keep in mind that it offers no advantages over just creating a variable within the component
     const [categories] = useState([
         {
           name: 'commercial',

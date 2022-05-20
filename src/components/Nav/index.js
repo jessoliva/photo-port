@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
-function Nav() {
+function Nav(props) {
 
-    // start by initializing the category state as an array of a few objects
-    // This could be just a regular array, rather than an array inside useState, but we chose to use the useState hook here so that we can have the option to change the categories at some point in the future
-    // It is completely fine to use useState without a setter, but keep in mind that it offers no advantages over just creating a variable within the component
-    const [categories] = useState([
-        {
-          name: 'commercial',
-          description: 'Photos of grocery stores, food trucks, and other commercial projects',
-        },
-        { name: 'portraits', description: 'Portraits of people in my life' },
-        { name: 'food', description: 'Delicious delicacies' },
-        { name: 'landscape', description: 'Fields, farmhouses, waterfalls, and the beauty of nature' },
-    ]);
-    
-    const [currentCategory, setCurrentCategory] = useState(categories[0]);
-    
+    // sent in from App.js file
+    const {
+        categories = [],
+        setCurrentCategory,
+        currentCategory,
+    } = props;
+
+    // do this instead of simply document.title = currentCategory
+    // bc we need a Hook to re-render the page
+    // use a Hook to trigger a re-render on a variable value change
+    useEffect(() => {
+        document.title = capitalizeFirstLetter(currentCategory.name);
+    }, [currentCategory]);
+    // 1st arg --> callback function
+    // 2nd arg --> directs the hook to re-render the component on changes to the value of this state --> in other words, if currentCategory changes now, the component will re-render so that the change in document.title will be reflected
+
     return (
         <header className="flex-row px-1">
           <h2>
