@@ -1,4 +1,4 @@
-// this is in the module, but was not originally in this file, is it not needed?
+// this file is the root component that's responsible for how the React components currently render
 import React, { useState } from 'react'; 
 import Nav from './components/Nav';
 import About from './components/About';
@@ -28,6 +28,11 @@ function App() {
     ]);
 
     const [currentCategory, setCurrentCategory] = useState(categories[0]);
+    // Passing the getter and setter functions into the Nav component will allow this component to modify the state in the App component, which will conditionally render based on the user's selection
+
+    // to render ContactForm component conditionally
+    // we set the initial value of contactSelected to false. This is to prevent the contact form from showing when a user initially navigates to the homepage. The Gallery will display instead
+    const [contactSelected, setContactSelected] = useState(false);
 
     return (
         <div>
@@ -35,13 +40,30 @@ function App() {
                 categories={categories}
                 setCurrentCategory={setCurrentCategory}
                 currentCategory={currentCategory}
+                contactSelected={contactSelected}
+                setContactSelected={setContactSelected}
             ></Nav>
             <main>
-                <ContactForm />
-                <Gallery currentCategory={currentCategory} />  
-                <About />  
-                {/* this is a component */}
-                {/* same as <About></About> */}
+                {/*  if the contactSelected is false, the Gallery and About components should be rendered, but if contactedSelected is true, the ContactForm component should be rendered */}
+                {!contactSelected ? (
+                    <>
+                        <Gallery currentCategory={currentCategory}></Gallery>
+                        <About></About>
+                        {/* this is a component same as <About></About> */}
+                    </>
+                ) : (
+                    <ContactForm></ContactForm>
+                )}
+
+                {/* same as */}
+                {/* if(!contactSelected) {
+                    <>
+                        <Gallery currentCategory={currentCategory}></Gallery>
+                        <About></About>
+                    </> 
+                } else {
+                    <ContactForm></ContactForm>
+                } */}
             </main>
         </div>
     );
@@ -54,3 +76,11 @@ export default App;
 // To effect any change on the application, we need to either modify this file or add components inside it
 
 // React components follow the PascalCase naming convention. Knowing this will help you quickly identify whether a function is a component or just a regular function
+
+// IF ELSE IN REACT
+    // The shorthand condition is called a ternary operator, identified with the ? and : symbols. The ternary operator is a popular pattern in React to enable conditional rendering, similar to how we used the && operator as a short circuit. With the ternary, though, we supply the false condition to render as well.
+
+// <> and </> that wrap the Gallery and About components
+    // They are called React fragments—a shorthand abbreviation for <React.Fragment></React.Fragment>
+    // allow multiple elements to be grouped together
+    //  Although in JSX you can only return a single parent element, this rule can be satisfied by wrapping the children components in a React fragment. This also allows you to wrap elements without creating extra DOM nodes, like wrapping with a <div> would do
