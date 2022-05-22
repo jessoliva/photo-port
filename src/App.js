@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Nav from './components/Nav';
 import About from './components/About';
 import Gallery from './components/Gallery';
+import ContactForm from './components/Contact'; // has to match the export name in the index.js file
 
 // You need to import React in every component file with `import Reach from 'react';`
 // You can also import any images or CSS you want to use at the top.
@@ -36,6 +37,7 @@ function App() {
                 currentCategory={currentCategory}
             ></Nav>
             <main>
+                <ContactForm />
                 <Gallery currentCategory={currentCategory} />  
                 <About />  
                 {/* this is a component */}
