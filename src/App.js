@@ -36,7 +36,7 @@ function App() {
                 currentCategory={currentCategory}
             ></Nav>
             <main>
-                <Gallery />  
+                <Gallery currentCategory={currentCategory} />  
                 <About />  
                 {/* this is a component */}
                 {/* same as <About></About> */}

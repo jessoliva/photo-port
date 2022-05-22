@@ -1,27 +1,20 @@
 import React from 'react';
+import PhotoList from '../PhotoList';
 // helper to capitalize name value when it's rendered
 import { capitalizeFirstLetter } from '../../utils/helpers';
-import photo from "../../assets/small/commercial/0.jpg";
 
-function Gallery(props) {
+function Gallery({ currentCategory }) {
 
-    // object provides name and description
-    const currentCategory = {
-        name: "commercial",
-        description:
-            "Photos of grocery stores, food trucks, and other commercial projects",
-    };
+    // destructure name and description properties from currentCategory
+    // which is sent in from App.js
+    const { name, description } = currentCategory;
+
     return (
         <section>
-            <h1>{capitalizeFirstLetter(currentCategory.name)}</h1>
-            <p>{currentCategory.description}</p>
-            <div>
-                <img
-                    src={photo}
-                    alt="Commercial Example"
-                    className="img-thumbnail mx-1"
-                />
-            </div>
+            <h1 data-testid="h1tag">{capitalizeFirstLetter(name)}</h1>
+            <p>{description}</p>
+            <PhotoList category={currentCategory.name} />
+            {/* use some prop drilling and pass down the currentCategory.name as a prop into the Photolist component from Gallery */}
         </section>
     );
 }
