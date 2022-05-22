@@ -48,7 +48,7 @@ function App() {
                 {!contactSelected ? (
                     <>
                         <Gallery currentCategory={currentCategory}></Gallery>
-                        <About></About>
+                        <About />
                         {/* this is a component same as <About></About> */}
                     </>
                 ) : (
