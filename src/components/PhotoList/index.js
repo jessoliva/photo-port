@@ -1,7 +1,7 @@
 // child component of the Gallery component that will now handle the photo rendering logic
 
 import React, { useState }  from 'react'
-// import Modal from '../Modal';
+import Modal from '../Modal';
 
 // props.category value has been passed down from Gallery as currentCategory.name --> so destructure props and use { category }
 
@@ -113,8 +113,29 @@ const PhotoList = ({ category }) => {
 
     // .map(function(element, index))
 
+	// We'll use the useState Hook in the PhotoList component to manage the current photo state and make this data accessible to the Modal component through props
+	const [currentPhoto, setCurrentPhoto] = useState();
+
+	// Here we updated the current photo state using the setCurrentPhoto function with the data retrieved through the click event
+	// Notice how we used the spread operator here to add the index: i key value pair to the current photo state. Because currentPhoto now contains the two critical data points needed for the modal, we can pass in currentPhoto as a prop to the Modal
+	const toggleModal = (image, i) => {
+		// current photo
+		// Using the setCurrentPhoto setter function, let's set the current photo state in the toggleModal function
+		setCurrentPhoto({...image, index: i});
+
+		// when a user clicks on an image, make this true to show the modal
+		setIsModalOpen(true);
+	}
+
+    // create another Hook that manages whether the modal is open or not
+    // In this expression, we set the initial state of isModalOpen to false, because we don't want the modal to open until a user has clicked on an image
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+
     return (
         <div>
+			{/* conditional saying if isModalOpen true, then render modal */}
+            {isModalOpen && <Modal currentPhoto={currentPhoto} />}
             <div className="flex-row">
                 {currentPhotos.map((image, i) => (
                     <img
@@ -124,6 +145,7 @@ const PhotoList = ({ category }) => {
                         alt={image.name}
                         className="img-thumbnail mx-1"
                         key={image.name}
+						onClick={() => toggleModal(image, i)}
                     />
                 ))}
             </div>
@@ -137,4 +159,13 @@ export default PhotoList;
 // The key attribute was also assigned the image's name. This attribute value must be a unique string. The absence of this unique key value will cause an error message. For more information about using the key attribute, refer to the React documentation on lists and keys (Links to an external site.).
 // src was assigned the require expression. Though this isn't a common practice, it certainly has its use cases! We were also able to take advantage of the incremental naming of the images by using i.
 // The default property is where the image has been saved. To render the image, the default property must be invoked.
+
+// MODAL INFO
+	// To obtain that data, we'll attach a click event to the images rendered in the PhotoList component
+	// In React, we'll use the onClick attribute and assign a click handler function to capture the individual photo data
+	// We passed in the current image and i as arguments
+		// The image object represents the element in the photos array, and the i will render the image as we did previously in the src attribute with the require function
+	// The two critical data points needed for the modal to render are the image and the index, i
+		// Let's pass the image and index data as props—to allow the modal to render the image
+	
 
