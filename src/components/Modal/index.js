@@ -1,7 +1,9 @@
 import React from 'react';
 
+// closing the modal will fall to the child component, the Modal
+
 // Destructure props into currentPhoto in the Modal parameter
-function Modal({currentPhoto}) {
+function Modal({ onClose, currentPhoto }) {
 
     // Then destructure currentPhoto properties into constants to assign their values into the modal
     const {name, category, description, index} = currentPhoto;
@@ -13,9 +15,8 @@ function Modal({currentPhoto}) {
                 <h3 className="modalTitle">{name}</h3>
                 <img src={require(`../../assets/large/${category}/${index}.jpg`)} alt="current category" />
                 <p>{description}</p>
-                <button type="button">
-                    Close this modal
-                </button>
+                <button onClick={onClose} type="button">Close this modal</button>
+                {/* assign the onClose function to a click event listener on the <button> element */}
             </div>
         </div>
     );
